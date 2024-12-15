@@ -31,4 +31,5 @@ bool get_string(FILE *, char *, size_t);
 void get_configuration_click_file(size_t *, size_t *);
 bool create_file_conf(void);
 void *thread_click(gpointer);
+void change_entry_setcl(GtkEntry*, gpointer);
 #endif

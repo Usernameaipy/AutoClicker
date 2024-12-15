@@ -50,4 +50,5 @@ void record_key_press(Display *, XEvent *);
 void thread_input(void);
 void get_user_clic(user_click *);
 void arr_print(void);
+void change_entry_quantity(GtkEntry*, gpointer);
 #endif

@@ -190,3 +190,19 @@ void arr_print(void) {
               clicks_stru.user_clicks[i].mouse.y);
   }
 }
+
+void change_entry_quantity(GtkEntry *entry, gpointer user_data){
+  FILE* file = NULL;
+  if(open_fl_rplus("config/setquantity.conf", &file)){
+    fclose(file);
+    file = fopen("config/setquantity.conf", "w");
+    fprintf(file, "%lu\n", (long unsigned)atoi((char*)gtk_entry_get_text(entry)));
+    fclose(file);
+  }
+  else {
+    create_file_conf_q();
+    file = fopen("config/setquantity.conf", "w");
+    fprintf(file, "%lu\n", (long unsigned)atoi((char*)gtk_entry_get_text(entry)));
+    fclose(file);
+  }
+}

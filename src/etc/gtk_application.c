@@ -14,28 +14,31 @@ void an_activate(GtkApplication *app) {
   GtkWidget *label_one = gtk_label_new("Time:");
   GtkWidget *label_two = gtk_label_new("Repets:");
   GtkWidget *label_three = gtk_label_new("Quantity:");
-  gtk_window_set_default_size(GTK_WINDOW(window), 420, 290);  //
+  gtk_window_set_default_size(GTK_WINDOW(window), 420, 290);
   create_combo_box(combo_box);
   gtk_widget_set_size_request(button_start, 180, 60);
   gtk_widget_set_size_request(button_remember, 180, 60);
-  gtk_widget_set_size_request(combo_box, 290, 60);  //
+  gtk_widget_set_size_request(combo_box, 290, 60);
   gtk_entry_set_width_chars(conf_one, 10);
   gtk_entry_set_width_chars(conf_two, 10);
   gtk_entry_set_width_chars(conf_three, 10);
   gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
   gtk_container_add(GTK_CONTAINER(window), widget_cord);
-  gtk_fixed_put(GTK_FIXED(widget_cord), label_one, 22, 110);                //
-  gtk_fixed_put(GTK_FIXED(widget_cord), GTK_WIDGET(conf_one), 22, 140);     //
-  gtk_fixed_put(GTK_FIXED(widget_cord), label_two, 161, 110);               //
-  gtk_fixed_put(GTK_FIXED(widget_cord), GTK_WIDGET(conf_two), 161, 140);    //
-  gtk_fixed_put(GTK_FIXED(widget_cord), label_three, 300, 110);             //
-  gtk_fixed_put(GTK_FIXED(widget_cord), GTK_WIDGET(conf_three), 300, 140);  //
+  gtk_fixed_put(GTK_FIXED(widget_cord), label_one, 22, 110);
+  gtk_fixed_put(GTK_FIXED(widget_cord), GTK_WIDGET(conf_one), 22, 140);
+  gtk_fixed_put(GTK_FIXED(widget_cord), label_two, 161, 110);
+  gtk_fixed_put(GTK_FIXED(widget_cord), GTK_WIDGET(conf_two), 161, 140);
+  gtk_fixed_put(GTK_FIXED(widget_cord), label_three, 300, 110);
+  gtk_fixed_put(GTK_FIXED(widget_cord), GTK_WIDGET(conf_three), 300, 140);
   gtk_fixed_put(GTK_FIXED(widget_cord), button_start, 218, 210);
   gtk_fixed_put(GTK_FIXED(widget_cord), button_remember, 22, 210);
-  gtk_fixed_put(GTK_FIXED(widget_cord), combo_box, 22, 30);  //
+  gtk_fixed_put(GTK_FIXED(widget_cord), combo_box, 22, 30);
   g_signal_connect(button_start, "clicked", G_CALLBACK(click_imitation),
                    combo_box);
   g_signal_connect(button_remember, "clicked", G_CALLBACK(thread_input), NULL);
+  g_signal_connect(conf_three, "changed", G_CALLBACK(change_entry_quantity), NULL);
+  g_signal_connect(conf_one, "changed", G_CALLBACK(change_entry_setcl), GINT_TO_POINTER(1));
+  g_signal_connect(conf_two, "changed", G_CALLBACK(change_entry_setcl), GINT_TO_POINTER(2));
   gtk_widget_show_all(window);
 }
 

@@ -121,3 +121,39 @@ bool create_file_conf(void) {
   fclose(file);
   return flag;
 }
+
+void change_entry_setcl(GtkEntry *entry, gpointer user_data){
+  FILE *file = NULL;
+  int flag = GPOINTER_TO_INT(user_data);
+  g_print("%d\n", flag);
+  if(open_fl_rplus("config/setcl.conf", &file)){
+    fclose(file);
+    file = fopen("config/setcl.conf", "w");
+    if(flag==1){
+      long unsigned time, quantity;
+      fscanf(file, "%lu\n%lu\n", &time, &quantity);
+      fprintf(file, "%lu\n%lu\n", (long unsigned)atoi((char*)gtk_entry_get_text(entry)), quantity);
+      fclose(file);
+    }
+    if(flag==2){
+      long unsigned time, quantity;
+      fscanf(file, "%lu\n%lu\n", &time, &quantity);
+      fprintf(file, "%lu\n%lu\n", time, (long unsigned)atoi((char*)gtk_entry_get_text(entry)));
+      fclose(file);
+    }
+  }
+  else {
+    create_file_conf();
+    file = fopen("config/setcl.conf", "w");
+    if(flag==1){
+      long unsigned quantity=60;
+      fprintf(file, "%lu\n%lu\n", (long unsigned)atoi((char*)gtk_entry_get_text(entry)), quantity);
+      fclose(file);
+    }
+    if(flag==2){
+      long unsigned time=1;
+      fprintf(file, "%lu\n%lu\n", time, (long unsigned)atoi((char*)gtk_entry_get_text(entry)));
+      fclose(file);
+    }
+  }
+}
