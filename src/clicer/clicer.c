@@ -30,8 +30,8 @@ void *thread_click(gpointer user_data) {
       if (temp) {
         if (temp->type == actions_key) {
           char str[2];
-          str[0]=temp->keyboard.key;
-          str[1]='\0';
+          str[0] = temp->keyboard.key;
+          str[1] = '\0';
           KeyCode keycode = XKeysymToKeycode(display, XStringToKeysym(str));
           XSetInputFocus(display, target_window, RevertToPointerRoot,
                          CurrentTime);
@@ -40,7 +40,6 @@ void *thread_click(gpointer user_data) {
           XFlush(display);
           XTestFakeKeyEvent(display, keycode, False, 0);
           XFlush(display);
-          arr_print();
           g_usleep(time * 1000000);
         } else if (temp->type == actions_mouse) {
           XSetInputFocus(display, target_window, RevertToPointerRoot,
@@ -54,7 +53,6 @@ void *thread_click(gpointer user_data) {
           XFlush(display);
           XTestFakeButtonEvent(display, 1, FALSE, CurrentTime);
           XFlush(display);
-          arr_print();
           g_usleep(time * 1000000);
         }
       }

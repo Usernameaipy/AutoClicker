@@ -2,29 +2,37 @@
 
 void an_activate(GtkApplication *app) {
   GtkWidget *window = gtk_application_window_new(app);
+  gtk_window_set_title(GTK_WINDOW(window), "MyClicker");
   GtkWidget *button_start = gtk_button_new_with_label("Start");
   GtkWidget *button_remember = gtk_button_new_with_label("Remem");
   GtkWidget *text_area = gtk_text_view_new();
   GtkWidget *combo_box = gtk_combo_box_text_new();
   GtkWidget *widget_cord = gtk_fixed_new();
-  gtk_window_set_default_size(GTK_WINDOW(window), 665, 330);
-  GtkTextBuffer *buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_area));
-
+  GtkEntry *conf_one = GTK_ENTRY(gtk_entry_new());
+  GtkEntry *conf_two = GTK_ENTRY(gtk_entry_new());
+  GtkEntry *conf_three = GTK_ENTRY(gtk_entry_new());
+  GtkWidget *label_one = gtk_label_new("Time:");
+  GtkWidget *label_two = gtk_label_new("Repets:");
+  GtkWidget *label_three = gtk_label_new("Quantity:");
+  gtk_window_set_default_size(GTK_WINDOW(window), 420, 290);  //
   create_combo_box(combo_box);
-
-  gtk_widget_set_size_request(button_start, 100, 50);
-  gtk_widget_set_size_request(button_remember, 100, 50);
-  gtk_widget_set_size_request(combo_box, 290, 50);
-  gtk_widget_set_size_request(text_area, 600, 200);
-
-  gtk_window_set_resizable(GTK_WINDOW(window), TRUE);
+  gtk_widget_set_size_request(button_start, 180, 60);
+  gtk_widget_set_size_request(button_remember, 180, 60);
+  gtk_widget_set_size_request(combo_box, 290, 60);  //
+  gtk_entry_set_width_chars(conf_one, 10);
+  gtk_entry_set_width_chars(conf_two, 10);
+  gtk_entry_set_width_chars(conf_three, 10);
+  gtk_window_set_resizable(GTK_WINDOW(window), FALSE);
   gtk_container_add(GTK_CONTAINER(window), widget_cord);
-
-  gtk_fixed_put(GTK_FIXED(widget_cord), button_start, 540, 30);
-  gtk_fixed_put(GTK_FIXED(widget_cord), button_remember, 20, 30);
-  gtk_fixed_put(GTK_FIXED(widget_cord), combo_box, 140, 30);
-  gtk_fixed_put(GTK_FIXED(widget_cord), text_area, 30, 120);
-
+  gtk_fixed_put(GTK_FIXED(widget_cord), label_one, 22, 110);                //
+  gtk_fixed_put(GTK_FIXED(widget_cord), GTK_WIDGET(conf_one), 22, 140);     //
+  gtk_fixed_put(GTK_FIXED(widget_cord), label_two, 161, 110);               //
+  gtk_fixed_put(GTK_FIXED(widget_cord), GTK_WIDGET(conf_two), 161, 140);    //
+  gtk_fixed_put(GTK_FIXED(widget_cord), label_three, 300, 110);             //
+  gtk_fixed_put(GTK_FIXED(widget_cord), GTK_WIDGET(conf_three), 300, 140);  //
+  gtk_fixed_put(GTK_FIXED(widget_cord), button_start, 218, 210);
+  gtk_fixed_put(GTK_FIXED(widget_cord), button_remember, 22, 210);
+  gtk_fixed_put(GTK_FIXED(widget_cord), combo_box, 22, 30);  //
   g_signal_connect(button_start, "clicked", G_CALLBACK(click_imitation),
                    combo_box);
   g_signal_connect(button_remember, "clicked", G_CALLBACK(thread_input), NULL);

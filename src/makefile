@@ -6,6 +6,7 @@ FLAGS_X11 = -lX11 -lXtst
 BIN_DIR = ../bin/
 BUILD_DIR = ../build/
 NAME = app
+TEST_NAME = test
 
 all : main
 
@@ -44,7 +45,10 @@ clean_conf :
 	rm -rf *.conf
 	rm -rf config/*.conf
 
-clean : clean_o clean_dat clean_conf
+clean_tst :
+	rm -rf $(TEST_NAME)
+
+clean : clean_o clean_dat clean_conf clean_tst
 	rm -rf $(BUILD_DIR)*
 	rm -rf $(BIN_DIR)*
 

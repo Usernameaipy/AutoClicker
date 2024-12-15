@@ -77,7 +77,7 @@ bool click_add(user_click *click) {
   if (flag) {
     if (clicks_stru.now_len < clicks_stru.len) {
       cp_user_click(click, &clicks_stru.user_clicks[clicks_stru.now_len]);
-      clicks_stru.now_len+=1;
+      clicks_stru.now_len += 1;
     } else {
       if (reclicks_alloc(clicks_stru.len * 2)) {
         cp_user_click(click, &clicks_stru.user_clicks[clicks_stru.now_len]);
@@ -181,10 +181,12 @@ void get_user_clic(user_click *temp) {
   }
 }
 
-void arr_print(void){
-  for(size_t i = 0; i<clicks_stru.len; i++){
-    if(clicks_stru.user_clicks[i].type==actions_key){
+void arr_print(void) {
+  for (size_t i = 0; i < clicks_stru.len; i++) {
+    if (clicks_stru.user_clicks[i].type == actions_key) {
       g_print("%d\n", clicks_stru.user_clicks[i].keyboard.key);
-    } else g_print("%d %d\n", clicks_stru.user_clicks[i].mouse.x, clicks_stru.user_clicks[i].mouse.y);
+    } else
+      g_print("%d %d\n", clicks_stru.user_clicks[i].mouse.x,
+              clicks_stru.user_clicks[i].mouse.y);
   }
 }
