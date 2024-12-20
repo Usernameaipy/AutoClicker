@@ -89,32 +89,6 @@ bool click_add(user_click *click) {
   return flag;
 }
 
-void get_quan(size_t *quantity) {
-  FILE *file_conf = NULL;
-  bool flag = open_fl_rplus("config/setquantity.conf", &file_conf);
-  if (!flag) {
-    flag = create_file_conf_q();
-    flag = open_fl_rplus("config/setquantity.conf", &file_conf);
-  }
-  if (flag) {
-    fscanf(file_conf, "%lu\n", quantity);
-  }
-  if (file_conf) fclose(file_conf);
-}
-
-bool create_file_conf_q(void) {
-  bool flag = false;
-  FILE *file = NULL;
-  size_t quantity = 10;
-  file = fopen("config/setquantity.conf", "w");
-  if (file) flag = true;
-  if (flag) {
-    fprintf(file, "%lu\n", quantity);
-  }
-  fclose(file);
-  return flag;
-}
-
 size_t get_len_now(void) { return clicks_stru.now_len; }
 
 void record_mouse_click(Display *display, XEvent *event) {
@@ -154,7 +128,7 @@ void *input_click(void *f) {
   XMapWindow(display, window);
   XFlush(display);
   size_t quantity;
-  get_quan(&quantity);
+  get_file(&quantity, "config/qclick.conf", 10);
   clicks_alloc(quantity);
   XEvent event;
   while (get_len_now() < quantity) {
@@ -188,21 +162,5 @@ void arr_print(void) {
     } else
       g_print("%d %d\n", clicks_stru.user_clicks[i].mouse.x,
               clicks_stru.user_clicks[i].mouse.y);
-  }
-}
-
-void change_entry_quantity(GtkEntry *entry, gpointer user_data){
-  FILE* file = NULL;
-  if(open_fl_rplus("config/setquantity.conf", &file)){
-    fclose(file);
-    file = fopen("config/setquantity.conf", "w");
-    fprintf(file, "%lu\n", (long unsigned)atoi((char*)gtk_entry_get_text(entry)));
-    fclose(file);
-  }
-  else {
-    create_file_conf_q();
-    file = fopen("config/setquantity.conf", "w");
-    fprintf(file, "%lu\n", (long unsigned)atoi((char*)gtk_entry_get_text(entry)));
-    fclose(file);
   }
 }

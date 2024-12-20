@@ -36,9 +36,12 @@ void an_activate(GtkApplication *app) {
   g_signal_connect(button_start, "clicked", G_CALLBACK(click_imitation),
                    combo_box);
   g_signal_connect(button_remember, "clicked", G_CALLBACK(thread_input), NULL);
-  g_signal_connect(conf_three, "changed", G_CALLBACK(change_entry_quantity), NULL);
-  g_signal_connect(conf_one, "changed", G_CALLBACK(change_entry_setcl), GINT_TO_POINTER(1));
-  g_signal_connect(conf_two, "changed", G_CALLBACK(change_entry_setcl), GINT_TO_POINTER(2));
+  g_signal_connect(conf_three, "changed", G_CALLBACK(change_entry),
+                   "config/qclick.conf");
+  g_signal_connect(conf_one, "changed", G_CALLBACK(change_entry),
+                   "config/time.conf");
+  g_signal_connect(conf_two, "changed", G_CALLBACK(change_entry),
+                   "config/qrepets.conf");
   gtk_widget_show_all(window);
 }
 

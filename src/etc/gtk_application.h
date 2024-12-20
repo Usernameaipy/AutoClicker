@@ -7,6 +7,7 @@
 #define GTK_APP_H
 #include "../clicer/clicer.h"
 #include "../clicer/get_id_name_win.h"
+#include "../getcfile/get_file.h"
 void an_activate(GtkApplication *);
 void create_combo_box(GtkWidget *);
 void callback_for_combo_name(GtkComboBox *, gpointer);

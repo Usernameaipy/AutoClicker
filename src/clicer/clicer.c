@@ -6,7 +6,8 @@ void click_imitation(GtkWidget *button, gpointer user_data) {
       get_winid(gtk_combo_box_get_active(GTK_COMBO_BOX(combo_box)));
   Window target_window = id;
   size_t time = 0, quantity = 0;
-  get_configuration_click_file(&time, &quantity);
+  get_file(&time, "config/time.conf", 1);
+  get_file(&quantity, "config/qrepets.conf", 60);
   thread_param *param = g_new(thread_param, 1);
   *param = (thread_param){
       .target_window = target_window, .time = time, .quantity = quantity};
@@ -65,17 +66,6 @@ void *thread_click(gpointer user_data) {
   return NULL;
 }
 
-bool check_file(FILE *file) {
-  bool ret = false;
-  if (file != NULL) {
-    long curs = ftell(file);
-    int ch = fgetc(file);
-    fseek(file, curs, SEEK_SET);
-    ret = (ch != EOF) ? true : false;
-  }
-  return ret;
-}
-
 unsigned int get_winid(gint pos) {
   FILE *file = NULL;
   bool flag = open_fl_rplus("config/id.dat", &file);
@@ -93,67 +83,4 @@ bool get_string(FILE *file, char *string, size_t len) {
   bool flag = false;
   if (fgets(string, len, file)) flag = true;
   return flag;
-}
-
-void get_configuration_click_file(size_t *time, size_t *quantity) {
-  FILE *file_conf = NULL;
-  bool flag = open_fl_rplus("config/setcl.conf", &file_conf);
-  if (!flag) {
-    flag = create_file_conf();
-    flag = open_fl_rplus("config/setcl.conf", &file_conf);
-  }
-  if (flag) {
-    fscanf(file_conf, "%lu\n%lu\n", time, quantity);
-  }
-  if (file_conf) fclose(file_conf);
-}
-
-bool create_file_conf(void) {
-  bool flag = false;
-  FILE *file = NULL;
-  size_t time = 1;
-  size_t quantity = 60;
-  file = fopen("config/setcl.conf", "w");
-  if (file) flag = true;
-  if (flag) {
-    fprintf(file, "%lu\n%lu\n", time, quantity);
-  }
-  fclose(file);
-  return flag;
-}
-
-void change_entry_setcl(GtkEntry *entry, gpointer user_data){
-  FILE *file = NULL;
-  int flag = GPOINTER_TO_INT(user_data);
-  g_print("%d\n", flag);
-  if(open_fl_rplus("config/setcl.conf", &file)){
-    fclose(file);
-    file = fopen("config/setcl.conf", "w");
-    if(flag==1){
-      long unsigned time, quantity;
-      fscanf(file, "%lu\n%lu\n", &time, &quantity);
-      fprintf(file, "%lu\n%lu\n", (long unsigned)atoi((char*)gtk_entry_get_text(entry)), quantity);
-      fclose(file);
-    }
-    if(flag==2){
-      long unsigned time, quantity;
-      fscanf(file, "%lu\n%lu\n", &time, &quantity);
-      fprintf(file, "%lu\n%lu\n", time, (long unsigned)atoi((char*)gtk_entry_get_text(entry)));
-      fclose(file);
-    }
-  }
-  else {
-    create_file_conf();
-    file = fopen("config/setcl.conf", "w");
-    if(flag==1){
-      long unsigned quantity=60;
-      fprintf(file, "%lu\n%lu\n", (long unsigned)atoi((char*)gtk_entry_get_text(entry)), quantity);
-      fclose(file);
-    }
-    if(flag==2){
-      long unsigned time=1;
-      fprintf(file, "%lu\n%lu\n", time, (long unsigned)atoi((char*)gtk_entry_get_text(entry)));
-      fclose(file);
-    }
-  }
 }

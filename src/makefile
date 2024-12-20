@@ -10,8 +10,8 @@ TEST_NAME = test
 
 all : main
 
-main : main.o start.o gtk_application.o clicer.o get_id_name_win.o file_rplus.o input.o
-	$(CC) main.o start.o gtk_application.o clicer.o get_id_name_win.o file_rplus.o input.o -o $(BUILD_DIR)$(NAME) $(FLAGS_LINK_GTK) $(FLAGS_X11)
+main : main.o start.o gtk_application.o clicer.o get_id_name_win.o file_rplus.o input.o get_file.o
+	$(CC) main.o start.o gtk_application.o clicer.o get_id_name_win.o file_rplus.o input.o get_file.o -o $(BUILD_DIR)$(NAME) $(FLAGS_LINK_GTK) $(FLAGS_X11)
 
 main.o : main/main.c main/main.h
 	$(CC) -c $(CFLAGS_GTK) main/main.c -o main.o
@@ -28,8 +28,11 @@ clicer.o : clicer/clicer.c clicer/clicer.h
 get_id_name_win.o : clicer/get_id_name_win.c clicer/get_id_name_win.h
 	$(CC) -c $(CFLAGS_DEFOULT) clicer/get_id_name_win.c -o get_id_name_win.o $(FLAGS_X11)
 
-file_rplus.o : clicer/file_rplus.c clicer/file_rplus.h
-	$(CC) -c $(CFLAGS_DEFOULT) clicer/file_rplus.c -o file_rplus.o
+file_rplus.o : getcfile/file_rplus.c getcfile/file_rplus.h
+	$(CC) -c $(CFLAGS_DEFOULT) getcfile/file_rplus.c -o file_rplus.o
+
+get_file.o : getcfile/get_file.c getcfile/get_file.h
+	$(CC) -c $(CFLAGS_GTK) $(CFLAGS_DEFOULT) getcfile/get_file.c -o get_file.o
 
 input.o : input/input.c input/input.h
 	$(CC) -c $(CFLAGS_DEFOULT) $(CFLAGS_GTK) input/input.c -o input.o $(FLAGS_X11)
